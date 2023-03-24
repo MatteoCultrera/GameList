@@ -58,7 +58,7 @@ struct GameCardView: View {
             }
             .cornerRadius(20)
             .padding(2)
-            .background(Color.white)
+            .background(Color.gray)
             .cornerRadius(20)
             .padding()
             
