@@ -1,10 +1,3 @@
-//
-//  Game+ResponseModels.swift
-//  GameList
-//
-//  Created by Matteo Cultrera on 21/03/23.
-//
-
 import Foundation
 
 extension Models.Response {
@@ -14,6 +7,7 @@ extension Models.Response {
             case name
             case slug
             case imageBackground = "background_image"
+            case shortScreenshots = "short_screenshots"
             case rating
             case ratingTop = "rating_top"
         }
@@ -24,6 +18,7 @@ extension Models.Response {
         let imageBackground: URL?
         let rating: Double
         let ratingTop: Double
+        let shortScreenshots: [Models.Response.Game.ImageID]
     }
 }
 
@@ -33,6 +28,7 @@ extension Models.Response.Game: Normalizable {
             id: self.id,
             name: self.name,
             imageBackground: self.imageBackground,
+            smallImage: self.shortScreenshots.first(where: { $0.id == -1 })?.image ?? self.shortScreenshots.first?.image,
             rating: self.rating,
             ratingTop: self.ratingTop
         )

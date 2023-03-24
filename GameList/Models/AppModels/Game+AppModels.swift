@@ -12,6 +12,7 @@ extension Models.App {
         public let id: Int
         public let name: String
         public let imageBackground: URL?
+        public let smallImage: URL?
         public let rating: Double
         public let ratingTop: Double
         
@@ -19,12 +20,14 @@ extension Models.App {
             id: Int = 0,
             name: String = "",
             imageBackground: URL? = nil,
+            smallImage: URL? = nil,
             rating: Double = 0.0,
             ratingTop: Double = 0.0
         ) {
             self.id = id
             self.name = name
             self.imageBackground = imageBackground
+            self.smallImage = smallImage
             self.rating = rating
             self.ratingTop = ratingTop
         }
