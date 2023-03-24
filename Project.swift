@@ -23,10 +23,20 @@ let project = Project(
     targets: makeTargets()
 )
 
+
+
 // MARK: - Targets
 
 private func makeTargets() -> [Target] {
     var targets: [Target] = []
+    
+    var launchScreenPlist: [String: InfoPlist.Value] {
+        var additionalPlistValues = [String: InfoPlist.Value]()
+        additionalPlistValues["UILaunchStoryboardName"] = .string("LaunchScreen")
+        additionalPlistValues["UIUserInterfaceStyle"] = .string("Light")
+        
+        return additionalPlistValues
+    }
     
     targets.append(Target(
         name: "PModels",
@@ -55,6 +65,7 @@ private func makeTargets() -> [Target] {
         platform: .iOS,
         product: .app,
         bundleId: projectConfig.organizationName+".GameList",
+        infoPlist: .extendingDefault(with: launchScreenPlist),
         sources: ["Sources/**"],
         resources: ["Resources/**"],
         dependencies: [
