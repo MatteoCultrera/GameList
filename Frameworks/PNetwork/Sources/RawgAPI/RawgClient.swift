@@ -4,10 +4,10 @@ import PModels
 import XCTestDynamicOverlay
 
 public struct RawgClient: Sendable {
-    public var getList: @Sendable (Models.Response.List.Request) async throws -> Models.Response.List.Response
+    public var getList: @Sendable (Models.Request.List) async throws -> Models.Response.List
     
     public init(
-        getList: @escaping @Sendable (Models.Response.List.Request) async throws -> Models.Response.List.Response) {
+        getList: @escaping @Sendable (Models.Request.List) async throws -> Models.Response.List) {
         self.getList = getList
     }
 }

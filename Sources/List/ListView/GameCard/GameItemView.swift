@@ -16,98 +16,71 @@ struct GameCardView: View {
         let imageURL: URL?
         let rating: Double
         let maxRating: Double
+        let genres: String
         
         init(store: GameItem.State) {
             self.name = store.name
             self.imageURL = store.smallImage
             self.rating = store.rating
             self.maxRating = store.ratingTop
+            self.genres = store.genres.map {$0.prettyString() }.joined(separator: " • ")
         }
     }
     
     var body: some View {
         WithViewStore(self.store, observe: ViewState.init) { viewStore in
-            VStack(spacing: 0) {
-                VStack() {
-                    Spacer()
-                    Rectangle()
-                        .fill (
-                            LinearGradient(
-                                colors: [.black, .clear],
-                                startPoint: .bottom,
-                                endPoint: .top)
+            VStack(spacing: 15) {
+                Spacer()
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 200)
+                    .background {
+                        AsyncImage(
+                            url: viewStore.imageURL,
+                            content: { image in
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                            }, placeholder: {
+                                
+                            }
                         )
-                        .frame(height: 100)
-                }
-                .background {
-                    AsyncImage(
-                        url: viewStore.imageURL,
-                        content: { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                        }, placeholder: {
-                            
-                        }
-                    )
-                }
-                .frame(height: 250)
-                .clipped()
+                    }
+                    .mask(RoundedRectangle(cornerRadius: 20))
                 
                 titleHeader(store: viewStore)
             }
-            .cornerRadius(20)
-            .padding(2)
-            .background(Color.gray)
+            .padding()
+            .background {
+                AsyncImage(
+                    url: viewStore.imageURL,
+                    content: { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }, placeholder: {
+                        
+                    }
+                )
+                .overlay(.thinMaterial)
+            }
+            .clipped()
             .cornerRadius(20)
             .padding()
-            
-            //            VStack {
-//                Spacer()
-//                VStack {
-//
-//                    Text(viewStore.name)
-//                        .font(.title2.bold())
-//                        .padding(20)
-//                }
-//                .frame(maxWidth: .infinity, alignment: .leading)
-//                .background(Material.ultraThinMaterial)
-//                .cornerRadius(20)
-//                .padding(5)
-//            }
-//            .frame(maxWidth: .infinity)
-//            .frame(height: 250)
-//            .background {
-//                AsyncImage(
-//                    url: viewStore.imageURL,
-//                    content: { image in
-//                        image
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fill)
-//                    },
-//                    placeholder: {
-//
-//                    }
-//                )
-//            }
-//            .cornerRadius(20)
-//            .onTapGesture {
-//                viewStore.send(.cardTapped)
-//            }
         }
     }
     
     @ViewBuilder
     func titleHeader(store: ViewStore<ViewState, GameItem.Action>) -> some View {
-        VStack {
+        VStack(spacing: 5) {
             Text(store.name)
-                .foregroundColor(.white)
+                .foregroundColor(.primary)
                 .font(.title2.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
+            Text(store.genres)
+                .foregroundColor(.secondary)
+                .font(.footnote)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.vertical, 4)
-        .padding(.horizontal, 16)
-        .background(Color.black)
     }
 }
 
@@ -121,7 +94,8 @@ struct GameItemView_Previews: PreviewProvider {
                     imageBackground: URL(string: "https://media.rawg.io/media/games/5ec/5ecac5cb026ec26a56efcc546364e348.jpg"),
                     smallImage: URL(string: "https://media.rawg.io/media/screenshots/36f/36f941f72e2b2a41629f5fb3bd448688.jpg"),
                     rating: 2.3,
-                    ratingTop: 5
+                    ratingTop: 5,
+                    genres: [.card, .boardGames, .MMO]
                 ),
                 reducer: GameItem()
             )
