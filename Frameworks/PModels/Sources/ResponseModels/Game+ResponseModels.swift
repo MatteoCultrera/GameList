@@ -10,6 +10,7 @@ extension Models.Response {
             case shortScreenshots = "short_screenshots"
             case rating
             case ratingTop = "rating_top"
+            case genres
         }
         
         public let id: Int
@@ -19,6 +20,7 @@ extension Models.Response {
         let rating: Double
         let ratingTop: Double
         let shortScreenshots: [Models.Response.Game.ImageID]
+        let genres: [Models.Response.Genre]
     }
 }
 
@@ -30,7 +32,8 @@ extension Models.Response.Game: Normalizable {
             imageBackground: self.imageBackground,
             smallImage: self.shortScreenshots.first(where: { $0.id == -1 })?.image ?? self.shortScreenshots.first?.image,
             rating: self.rating,
-            ratingTop: self.ratingTop
+            ratingTop: self.ratingTop,
+            genres: self.genres.compactMap({$0.normalize()})
         )
     }
 }

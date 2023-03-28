@@ -12,7 +12,7 @@ public struct Initial: ReducerProtocol {
     
     public enum Action: Equatable {
         case startTapped
-        case startRespond(TaskResult<Models.Response.List.Response>)
+        case startRespond(TaskResult<Models.Response.List>)
     }
     
     @Dependency(\.rawgClient) var rawgClient
@@ -27,8 +27,21 @@ public struct Initial: ReducerProtocol {
                 return .task {
                     .startRespond(
                         await TaskResult {
-                            try await self.rawgClient.getList(
-                                .init(page: 1, pageSize: 30, search: "")
+                            
+                            let string = "01/02/2020"
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "dd/MM/yy"
+                            
+                            guard let date = dateFormatter.date(from: string) else {
+                                throw RawgClient.Error.invalidDate
+                            }
+                            
+                            return try await self.rawgClient.getList(
+                                .init(
+                                    page: 1,
+                                    pageSize: 30,
+                                    dates: (startDate: date, endDate: Date())
+                                )
                             )
                         }
                     )

@@ -10,29 +10,28 @@ extension RawgClient: DependencyKey {
                 throw Error.invalidURL
             }
             
+            var queryItems = [URLQueryItem]()
+            
             let apiKey = URLQueryItem(name: "key", value: "d38c2292730847f1be0a763017a96f8f")
+            queryItems.append(apiKey)
             
-            let startDate = Date(timeIntervalSince1970: 1_546_300_800)
-            let endDate = Date()
-            
-            let datesString = "\(Self.formatDate(from: startDate)),\(Self.formatDate(from: endDate))"
-            let date = URLQueryItem(name: "dates", value: datesString)
+            if let dates = request.dates {
+                let datesString = "\(Self.formatDate(from: dates.startDate)),\(Self.formatDate(from: dates.endDate))"
+                queryItems.append(URLQueryItem(name: "dates", value: datesString))
+            }
             
             let orderingString = URLQueryItem(name: "ordering", value: "-metacritic")
+            queryItems.append(orderingString)
             
             let page = URLQueryItem(name: "page", value: "\(request.page)")
             let limit = URLQueryItem(name: "page_size", value: "\(request.pageSize)")
+            queryItems.append(page)
+            queryItems.append(limit)
             
-            let url = baseUrl.appending(queryItems: [
-                apiKey,
-                page,
-                limit,
-                date,
-                orderingString
-            ])
+            let url = baseUrl.appending(queryItems: queryItems)
             
             let (data, _) = try await URLSession.shared.data(from: url)
-            let response = try JSONDecoder().decode(Models.Response.List.Response.self, from: data)
+            let response = try JSONDecoder().decode(Models.Response.List.self, from: data)
             return response
         }
     )

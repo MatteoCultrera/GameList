@@ -4,12 +4,12 @@ import PModels
 import XCTestDynamicOverlay
 
 public struct RawgClient: Sendable {
-    public var getList: @Sendable (Models.Response.List.Request) async throws -> Models.Response.List.Response
+    public var getList: @Sendable (Models.Request.List) async throws -> Models.Response.List
     
     public init(
-        getList: @escaping @Sendable (Models.Response.List.Request) async throws -> Models.Response.List.Response) {
-        self.getList = getList
-    }
+        getList: @escaping @Sendable (Models.Request.List) async throws -> Models.Response.List) {
+            self.getList = getList
+        }
 }
 
 extension RawgClient: TestDependencyKey {
@@ -27,13 +27,16 @@ extension DependencyValues {
 
 extension RawgClient {
     public enum Error: Equatable, LocalizedError, Sendable {
-      case invalidURL
-
-      public var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-          return "Invalid URL"
+        case invalidURL
+        case invalidDate
+        
+        public var errorDescription: String? {
+            switch self {
+            case .invalidURL:
+                return "Invalid URL"
+            case .invalidDate:
+                return "Invalid Date"
+            }
         }
-      }
     }
 }
