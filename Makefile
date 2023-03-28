@@ -16,11 +16,13 @@ manifest:
 	tuist edit
 
 app:
+	sh scripts/generate_api_token.sh
 	tuist generate
 
 clean:
 	tuist clean
 
 fetch-app:
+	sh scripts/generate_api_token.sh
 	tuist fetch
 	tuist generate
