@@ -8,8 +8,8 @@ public struct RawgClient: Sendable {
     
     public init(
         getList: @escaping @Sendable (Models.Request.List) async throws -> Models.Response.List) {
-        self.getList = getList
-    }
+            self.getList = getList
+        }
 }
 
 extension RawgClient: TestDependencyKey {
@@ -27,13 +27,16 @@ extension DependencyValues {
 
 extension RawgClient {
     public enum Error: Equatable, LocalizedError, Sendable {
-      case invalidURL
-
-      public var errorDescription: String? {
-        switch self {
-        case .invalidURL:
-          return "Invalid URL"
+        case invalidURL
+        case invalidDate
+        
+        public var errorDescription: String? {
+            switch self {
+            case .invalidURL:
+                return "Invalid URL"
+            case .invalidDate:
+                return "Invalid Date"
+            }
         }
-      }
     }
 }

@@ -32,11 +32,15 @@ public struct Initial: ReducerProtocol {
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "dd/MM/yy"
                             
+                            guard let date = dateFormatter.date(from: string) else {
+                                throw RawgClient.Error.invalidDate
+                            }
+                            
                             return try await self.rawgClient.getList(
                                 .init(
                                     page: 1,
                                     pageSize: 30,
-                                    dates: (startDate: dateFormatter.date(from: string)!, endDate: Date())
+                                    dates: (startDate: date, endDate: Date())
                                 )
                             )
                         }
