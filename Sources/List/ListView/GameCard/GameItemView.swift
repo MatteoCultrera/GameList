@@ -23,7 +23,7 @@ struct GameCardView: View {
             self.imageURL = store.smallImage
             self.rating = store.rating
             self.maxRating = store.ratingTop
-            self.genres = store.genres.map {$0.prettyString() }.joined(separator: " • ")
+            self.genres = store.genres.map { $0.prettyString() }.joined(separator: " • ")
         }
     }
     
