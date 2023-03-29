@@ -1,0 +1,3 @@
+public struct ApiEnvironment {
+    public static let apiToken = "{{ argument.apiToken }}"
+}

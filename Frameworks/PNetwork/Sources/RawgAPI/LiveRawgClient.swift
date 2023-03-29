@@ -12,7 +12,7 @@ extension RawgClient: DependencyKey {
             
             var queryItems = [URLQueryItem]()
             
-            let apiKey = URLQueryItem(name: "key", value: "d38c2292730847f1be0a763017a96f8f")
+            let apiKey = URLQueryItem(name: "key", value: ApiEnvironment.apiToken)
             queryItems.append(apiKey)
             
             if let dates = request.dates {
