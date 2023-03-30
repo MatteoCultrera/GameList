@@ -15,22 +15,6 @@ struct GameItemView: View {
                         gameImage(image: viewStore.gameImage)
                             .animation(.default, value: viewStore.gameImage)
                             .transition(.opacity)
-//                        CachedAsyncImage(
-//                            url: viewStore.game.smallImage,
-//                            content: { phase in
-//                                switch phase {
-//                                case let .success(image):
-//                                    image
-//                                        .resizable()
-//                                        .scaledToFill()
-//                                default:
-//                                    VStack {
-//
-//                                    }
-//                                    .background(Color.red)
-//                                }
-//                            }
-//                        )
                     }
                     .mask(RoundedRectangle(cornerRadius: 20))
                 
@@ -51,7 +35,7 @@ struct GameItemView: View {
     }
     
     @ViewBuilder
-    func titleHeader(name: String, genres: String) -> some View {
+    private func titleHeader(name: String, genres: String) -> some View {
         VStack(spacing: 5) {
             Text(name)
                 .foregroundColor(.primary)
@@ -65,7 +49,7 @@ struct GameItemView: View {
     }
     
     @ViewBuilder
-    func gameImage(image: Image?) -> some View {
+    private func gameImage(image: Image?) -> some View {
         if let image {
             image
                 .resizable()
