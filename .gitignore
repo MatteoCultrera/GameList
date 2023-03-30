@@ -91,3 +91,6 @@ iOSInjectionProject/
 .DS_Store
 TuistApp.xcodeproj/project.pbxproj
 Frameworks/PNetwork/Sources/RawgAPI/Utils/ApiEnvironment.swift
+Derived
+TuistApp.xcodeproj
+TuistApp.xcworkspace
