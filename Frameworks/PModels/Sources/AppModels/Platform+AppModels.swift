@@ -1,7 +1,11 @@
 import Foundation
 
 extension Models.App {
-    public enum Platform: String {
+    public enum Platform: String, Comparable {
+        public static func < (lhs: Models.App.Platform, rhs: Models.App.Platform) -> Bool {
+            return lhs.sortValue() < rhs.sortValue()
+        }
+        
         case pc
         case playstation5
         case playstation4
@@ -155,6 +159,111 @@ extension Models.App {
                 return "Game Gear"
             case .neoGeo:
                 return "Neo Geo"
+            }
+        }
+        
+        public func sortValue() -> Int {
+            switch self {
+            case .pc:
+                return 0
+            case .xboxOne:
+                return 1
+            case .xboxSeriesX:
+                return 2
+            case .xbox360:
+                return 3
+            case .xbox:
+                return 4
+            case .playstation5:
+                return 5
+            case .playstation4:
+                return 6
+            case .playstation3:
+                return 7
+            case .playstation2:
+                return 8
+            case .playstation1:
+                return 9
+            case .psVita:
+                return 10
+            case .psp:
+                return 11
+            case .nintendoSwitch:
+                return 12
+            case .wiiU:
+                return 13
+            case .wii:
+                return 14
+            case .nintendo3DS:
+                return 15
+            case .nintendoDSi:
+                return 16
+            case .nintendoDS:
+                return 17
+            case .gameBoyAdvance:
+                return 18
+            case .gameBoyColor:
+                return 19
+            case .gameBoy:
+                return 20
+            case .nintendo64:
+                return 21
+            case .gamecube:
+                return 22
+            case .snes:
+                return 23
+            case .nes:
+                return 24
+            case .gameGear:
+                return 25
+            case .ios:
+                return 26
+            case .macOS:
+                return 27
+            case .macintosh:
+                return 28
+            case .appleII:
+                return 29
+            case .android:
+                return 30
+            case .linux:
+                return 31
+            case .commodore:
+                return 32
+            case .atari7800:
+                return 33
+            case .atari5200:
+                return 34
+            case .atari2600:
+                return 35
+            case .atariFlashback:
+                return 36
+            case .atari8bit:
+                return 37
+            case .atariST:
+                return 38
+            case .atariLynx:
+                return 39
+            case .atariXegs:
+                return 40
+            case .segaGenesis:
+                return 41
+            case .segaSaturn:
+                return 42
+            case .segaCD:
+                return 43
+            case .sega32x:
+                return 44
+            case .segaMaster:
+                return 45
+            case .dreamcast:
+                return 46
+            case .panasonic3do:
+                return 47
+            case .jaguar:
+                return 48
+            case .neoGeo:
+                return 49
             }
         }
     }

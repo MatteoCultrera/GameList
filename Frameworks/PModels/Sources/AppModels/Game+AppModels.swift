@@ -16,6 +16,7 @@ extension Models.App {
         public let rating: Double
         public let ratingTop: Double
         public let genres: [Models.App.Genre]
+        public let platforms: [Models.App.Platform]
         
         public init(
             id: Int = 0,
@@ -24,7 +25,8 @@ extension Models.App {
             smallImage: URL? = nil,
             rating: Double = 0.0,
             ratingTop: Double = 0.0,
-            genres: [Models.App.Genre] = []
+            genres: [Models.App.Genre] = [],
+            platforms: [Models.App.Platform] = []
         ) {
             self.id = id
             self.name = name
@@ -33,6 +35,7 @@ extension Models.App {
             self.rating = rating
             self.ratingTop = ratingTop
             self.genres = genres
+            self.platforms = platforms
         }
     }
 }
