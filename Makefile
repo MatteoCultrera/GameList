@@ -9,7 +9,6 @@ list:
 	@echo "fetch-app"
 	@echo "app"
 	@echo "clean"
-	@echo "generate-resources"
 	@echo ""
 
 manifest:
