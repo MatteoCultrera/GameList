@@ -39,22 +39,25 @@ private func makeTargets() -> [Target] {
     }
     
     targets.append(Target(
-        name: "PResources",
-        platform: .iOS,
-        product: .framework,
-        bundleId: projectConfig.organizationName+".GameList.PResources",
-        infoPlist: .default,
-        sources: ["Frameworks/PResources/Sources/**"],
-        resources: ["Frameworks/PResources/Resources/**"]
-    ))
-    
-    targets.append(Target(
         name: "PModels",
         platform: .iOS,
         product: .framework,
         bundleId: projectConfig.organizationName+".GameList.PModels",
         infoPlist: .default,
         sources: ["Frameworks/PModels/Sources/**"]
+    ))
+    
+    targets.append(Target(
+        name: "PResources",
+        platform: .iOS,
+        product: .framework,
+        bundleId: projectConfig.organizationName+".GameList.PResources",
+        infoPlist: .default,
+        sources: ["Frameworks/PResources/Sources/**"],
+        resources: ["Frameworks/PResources/Resources/**"],
+        dependencies: [
+            .target(name: "PModels")
+        ]
     ))
     
     targets.append(Target(
