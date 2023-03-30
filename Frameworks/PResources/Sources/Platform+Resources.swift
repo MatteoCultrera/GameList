@@ -25,22 +25,18 @@ extension Models.App.Platform {
         case .linux:
             return PResourcesAsset.linux
         case .snes, .nes, .segaGenesis, .segaSaturn,
-                .segaCD, .sega32x, .segaMaster:
+                .segaCD, .sega32x, .segaMaster, .dreamcast:
             return PResourcesAsset.sega
         case .commodore:
-            return PResourcesAsset.sega
+            return PResourcesAsset.commodore
         case .atari7800, .atari5200, .atari2600,
                 .atariFlashback, .atari8bit, .atariST,
-                .atariLynx, .atariXegs:
-            return PResourcesAsset.atari
-        case .dreamcast:
+                .atariLynx, .atariXegs, .jaguar:
             return PResourcesAsset.atari
         case .panasonic3do:
-            return PResourcesAsset.atari
-        case .jaguar:
-            return PResourcesAsset.atari
+            return PResourcesAsset._3Do
         case .neoGeo:
-            return PResourcesAsset.atari
+            return PResourcesAsset.neogeo
         }
     }
 }
