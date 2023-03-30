@@ -39,12 +39,35 @@ private func makeTargets() -> [Target] {
     }
     
     targets.append(Target(
+        name: "PResources",
+        platform: .iOS,
+        product: .framework,
+        bundleId: projectConfig.organizationName+".GameList.PResources",
+        infoPlist: .default,
+        sources: ["Frameworks/PResources/Sources/**"],
+        resources: ["Frameworks/PResources/Resources/**"]
+    ))
+    
+    targets.append(Target(
         name: "PModels",
         platform: .iOS,
         product: .framework,
         bundleId: projectConfig.organizationName+".GameList.PModels",
         infoPlist: .default,
         sources: ["Frameworks/PModels/Sources/**"]
+    ))
+    
+    targets.append(Target(
+        name: "PCache",
+        platform: .iOS,
+        product: .framework,
+        bundleId: projectConfig.organizationName+".GameList.PCache",
+        infoPlist: .default,
+        sources: ["Frameworks/PCache/Sources/**"],
+        dependencies: [
+            .target(name: "PResources"),
+            .external(name: "Dependencies")
+        ]
     ))
     
     targets.append(Target(
@@ -56,6 +79,7 @@ private func makeTargets() -> [Target] {
         sources: ["Frameworks/PNetwork/Sources/**"],
         dependencies: [
             .target(name: "PModels"),
+            .target(name: "PResources"),
             .external(name: "Dependencies")
         ]
     ))
@@ -67,10 +91,11 @@ private func makeTargets() -> [Target] {
         bundleId: projectConfig.organizationName+".GameList",
         infoPlist: .extendingDefault(with: launchScreenPlist),
         sources: ["Sources/**"],
-        resources: ["Resources/**"],
         dependencies: [
             .target(name: "PModels"),
             .target(name: "PNetwork"),
+            .target(name: "PCache"),
+            .target(name: "PResources"),
             .external(name: "ComposableArchitecture")
         ]
     ))

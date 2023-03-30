@@ -21,7 +21,15 @@ public struct GameApp: ReducerProtocol {
         Reduce { state, action in
             switch action {
             case let .initial(.startRespond(.success(response))):
-                state = .list(List.State(games: IdentifiedArrayOf<Models.App.Game>(uniqueElements: response.results.map { $0.normalize() })))
+                state = .list(
+                    List.State(
+                        games: IdentifiedArrayOf<GameItem.State>(
+                            uniqueElements: response.results.map {
+                                GameItem.State(id: $0.id, game: $0.normalize())
+                            }
+                        )
+                    )
+                )
                 return .none
             case .initial(.startTapped):
                 return .none

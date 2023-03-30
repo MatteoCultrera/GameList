@@ -16,6 +16,7 @@ manifest:
 	tuist edit
 
 app:
+	$(MAKE) generate
 	sh scripts/generate_api_token.sh
 	tuist generate
 
@@ -23,6 +24,12 @@ clean:
 	tuist clean
 
 fetch-app:
-	sh scripts/generate_api_token.sh
+	$(MAKE) generate
 	tuist fetch
 	tuist generate
+
+generate-token:
+	sh scripts/generate_api_token.sh
+
+generate:
+	$(MAKE) generate-token

@@ -16,10 +16,9 @@ struct ListView: View {
                 ForEachStore(
                     self.store.scope(
                         state: \.games,
-                        action: List.Action.gameCardTapped(id:action:)
-                    )
+                        action: List.Action.gameCardAction(id:action:))
                 ) {
-                    GameCardView(store: $0)
+                    GameItemView(store: $0)
                 }
             }
             .listStyle(.plain)
