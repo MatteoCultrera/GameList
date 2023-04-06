@@ -20,7 +20,7 @@ extension RawgClient: DependencyKey {
 				queryItems.append(URLQueryItem(name: "dates", value: datesString))
 			}
 			
-			let orderingString = URLQueryItem(name: "ordering", value: "-rating")
+			let orderingString = URLQueryItem(name: "ordering", value: "-metacritic")
 			queryItems.append(orderingString)
 			
 			let page = URLQueryItem(name: "page", value: "\(request.page)")
