@@ -9,7 +9,7 @@ struct GameItemView: View {
 	var body: some View {
 		WithViewStore(self.store, observe: { $0 }) { viewStore in
 			VStack(spacing: 15) {
-				Spacer()
+				Color.clear
 					.frame(maxWidth: .infinity)
 					.frame(height: 200)
 					.background {

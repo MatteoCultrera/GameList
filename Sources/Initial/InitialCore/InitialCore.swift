@@ -39,7 +39,7 @@ public struct Initial: ReducerProtocol {
 							return try await self.rawgClient.getList(
 								.init(
 									page: 1,
-									pageSize: 30,
+									pageSize: 10,
 									dates: (startDate: date, endDate: Date())
 								)
 							)

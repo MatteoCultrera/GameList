@@ -21,12 +21,14 @@ struct ListView: View {
 					GameItemView(store: $0)
 						.listRowSeparator(.hidden)
 				}
+				LoadingItemView()
+					.onAppear {
+						store.send(.loadMoreGames)
+					}
 			}
 			.listStyle(.plain)
 		}
 	}
-	
-	
 }
 
 struct ListView_Previews: PreviewProvider {
