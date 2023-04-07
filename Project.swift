@@ -106,7 +106,7 @@ private func makeTargets() -> [Target] {
         bundleId: projectConfig.organizationName+".GameList",
         infoPlist: .extendingDefault(with: launchScreenPlist),
         sources: ["Sources/**"],
-        resources: ["Resources/**"],
+        resources: ["Resources/**", "Frameworks/PResources/Resources/Animations/**"],
         dependencies: [
             .target(name: "PModels"),
             .target(name: "PNetwork"),
