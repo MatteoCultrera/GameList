@@ -21,7 +21,8 @@ struct InitialView: View {
 		}
 	}
 	
-	let animation = PResourcesAnimations.zombie
+	let animation = PResourcesAnimations.beachSwitch
+	@State var isSelected = false
 	
 	var body: some View {
 		WithViewStore(self.store, observe: ViewState.init) { viewStore in
@@ -29,7 +30,8 @@ struct InitialView: View {
 				
 				Spacer()
 				Button("Start") {
-					animation.trigger(trigger: .hit)
+					isSelected.toggle()
+					animation.setBool(bool: .isSelected, value: isSelected)
 //					viewStore.send(.startTapped)
 				}
 				.disabled(viewStore.isQueryPerforming)
