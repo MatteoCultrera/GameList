@@ -23,7 +23,15 @@ let project = Project(
     options: .options(
         textSettings: .textSettings(usesTabs: true, indentWidth: 2, tabWidth: 2, wrapsLines: true)
     ),
-    targets: makeTargets()
+    targets: makeTargets(),
+    resourceSynthesizers: [
+        .assets(),
+        .custom(
+            name: "Rive",
+            parser: .json,
+            extensions: ["rivDesc"]
+        )
+    ]
 )
 
 
@@ -59,7 +67,8 @@ private func makeTargets() -> [Target] {
         sources: ["Frameworks/PResources/Sources/**"],
         resources: ["Frameworks/PResources/Resources/**"],
         dependencies: [
-            .target(name: "PModels")
+            .target(name: "PModels"),
+            .external(name: "RiveRuntime")
         ]
     ))
     
@@ -97,12 +106,14 @@ private func makeTargets() -> [Target] {
         bundleId: projectConfig.organizationName+".GameList",
         infoPlist: .extendingDefault(with: launchScreenPlist),
         sources: ["Sources/**"],
+        resources: ["Resources/**", "Frameworks/PResources/Resources/Animations/**"],
         dependencies: [
             .target(name: "PModels"),
             .target(name: "PNetwork"),
             .target(name: "PCache"),
             .target(name: "PResources"),
-            .external(name: "ComposableArchitecture")
+            .external(name: "ComposableArchitecture"),
+            .external(name: "RiveRuntime")
         ]
     ))
     

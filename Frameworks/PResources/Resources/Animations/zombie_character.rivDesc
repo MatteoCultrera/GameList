@@ -1,0 +1,11 @@
+{
+	"name": "Zombie",
+	"fileName": "zombie_character",
+	"stateMachine": {
+		"name": "State Machine 1",
+		"triggers": {
+			"hit": "Hit", 
+			"revive": "In"
+		}
+	}
+}

@@ -6,6 +6,8 @@
 //
 
 import ComposableArchitecture
+import RiveRuntime
+import PResources
 import SwiftUI
 
 struct InitialView: View {
@@ -19,17 +21,29 @@ struct InitialView: View {
 		}
 	}
 	
+	let animation = PResourcesAnimations.beachSwitch
+	@State var isSelected = false
+	
 	var body: some View {
 		WithViewStore(self.store, observe: ViewState.init) { viewStore in
 			VStack {
+				
 				Spacer()
 				Button("Start") {
-					viewStore.send(.startTapped)
+					isSelected.toggle()
+					animation.setBool(bool: .isSelected, value: isSelected)
+//					viewStore.send(.startTapped)
 				}
 				.disabled(viewStore.isQueryPerforming)
+				Spacer()
 			}
 			.frame(maxWidth: .infinity)
-			.background(Color.red)
+			.background {
+				animation
+					.view
+					.ignoresSafeArea()
+			}
+			.ignoresSafeArea()
 		}
 	}
 }

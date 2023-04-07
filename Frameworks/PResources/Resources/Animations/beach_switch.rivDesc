@@ -1,0 +1,10 @@
+{
+	"name": "BeachSwitch",
+	"fileName": "beach_switch",
+	"stateMachine": {
+		"name": "State Machine 1",
+		"booleans": {
+			"isSelected": "isPressed"
+		}
+	}
+}

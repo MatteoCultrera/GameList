@@ -1,0 +1,97 @@
+#if os(macOS)
+  import AppKit
+#elseif os(iOS)
+  {% if resourceCount.arresourcegroup > 0 %}
+  import ARKit
+  {% endif %}
+  import UIKit
+#elseif os(tvOS) || os(watchOS)
+  import UIKit
+#endif
+#if canImport(SwiftUI)
+  import SwiftUI
+#endif
+import RiveRuntime
+{% macro createElement file %}
+{% if file.document.data.stateMachine %}
+  public static let {{file.document.data.name|lowerFirstWord}} = {{file.document.data.name}}(fileName: "{{file.document.data.fileName}}")
+{% else %}
+  public static let {{file.document.data.name|lowerFirstWord}}: BaseRiveAnimation = BaseRiveAnimationImpl(fileName: "{{file.document.data.fileName}}")
+{% endif %}
+{% endmacro %}
+{% macro fileBlock file %}
+{% if file.document.data.stateMachine %}
+{% call createStruct file.document.data file.document.metadata %}
+{% endif %}
+{% endmacro %}
+{% macro createStruct object metadata %}
+{% call createStateMachineStruct object.name object.fileName object.stateMachine %}
+{% endmacro %}
+{% macro createStateMachineStruct name fileName stateMachine %}
+
+public class {{name}}: BaseRiveAnimationImpl{% if stateMachine.triggers %}, RiveTriggerable{% endif %}{% if stateMachine.booleans %}, RiveBoolean{% endif %} {
+  {% if stateMachine.triggers %}
+  public enum Triggers: String {
+  {% for key, value in stateMachine.triggers %}
+    case {{key}} = "{{value}}"
+  {% endfor %}
+  }
+  {% endif %}
+  {% if stateMachine.booleans %}
+  public enum Booleans: String {
+  {% for key, value in stateMachine.booleans %}
+    case {{key}} = "{{value}}"
+  {% endfor %}
+  }
+  {% endif %}
+}
+{% endmacro %}
+
+// MARK: - Animations
+
+public enum PResourcesAnimations {
+  {% for file in files %}
+  {% call createElement file %}
+  {% endfor %}
+}
+
+public protocol BaseRiveAnimation {
+  var riveViewModel: RiveViewModel { get }
+  var view: AnyView { get }
+}
+
+public class BaseRiveAnimationImpl: BaseRiveAnimation {
+  public var riveViewModel: RiveViewModel
+  public var view: AnyView
+  init(fileName: String) {
+    riveViewModel = RiveViewModel(fileName: fileName)
+    self.view = riveViewModel.view()
+  }
+}
+
+public protocol RiveTriggerable: BaseRiveAnimation {
+  associatedtype Triggers: RawRepresentable where Triggers.RawValue == String
+  
+  func trigger(trigger: Triggers)
+}
+
+extension RiveTriggerable {
+  public func trigger(trigger: Triggers) {
+    riveViewModel.triggerInput(trigger.rawValue)
+  }
+}
+
+public protocol RiveBoolean: BaseRiveAnimation {
+  associatedtype Booleans: RawRepresentable where Booleans.RawValue == String
+  
+  func setBool(bool: Booleans, value: Bool)
+}
+
+extension RiveBoolean {
+  public func setBool(bool: Booleans, value: Bool) {
+    riveViewModel.setInput(bool.rawValue, value: value)
+  }
+}
+{% for file in files %}
+{% call fileBlock file %}
+{% endfor %}
