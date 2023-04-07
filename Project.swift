@@ -28,8 +28,8 @@ let project = Project(
         .assets(),
         .custom(
             name: "Rive",
-            parser: .files,
-            extensions: ["riv"]
+            parser: .json,
+            extensions: ["rivDesc"]
         )
     ]
 )

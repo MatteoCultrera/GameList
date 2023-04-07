@@ -21,7 +21,7 @@ struct InitialView: View {
 		}
 	}
 	
-	let animation = PResourcesAnimations.zombie_character.withStateMachine(name: "State Machine 1")
+	let animation = PResourcesAnimations.zombie
 	
 	var body: some View {
 		WithViewStore(self.store, observe: ViewState.init) { viewStore in
@@ -29,7 +29,7 @@ struct InitialView: View {
 				
 				Spacer()
 				Button("Start") {
-					animation.triggerInput("Hit")
+					animation.trigger(trigger: .hit)
 //					viewStore.send(.startTapped)
 				}
 				.disabled(viewStore.isQueryPerforming)
@@ -38,7 +38,7 @@ struct InitialView: View {
 			.frame(maxWidth: .infinity)
 			.background {
 				animation
-					.view()
+					.view
 					.ignoresSafeArea()
 			}
 			.ignoresSafeArea()
