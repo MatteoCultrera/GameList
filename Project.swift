@@ -23,7 +23,15 @@ let project = Project(
     options: .options(
         textSettings: .textSettings(usesTabs: true, indentWidth: 2, tabWidth: 2, wrapsLines: true)
     ),
-    targets: makeTargets()
+    targets: makeTargets(),
+    resourceSynthesizers: [
+        .assets(),
+        .custom(
+            name: "Rive",
+            parser: .files,
+            extensions: ["riv"]
+        )
+    ]
 )
 
 
@@ -59,7 +67,8 @@ private func makeTargets() -> [Target] {
         sources: ["Frameworks/PResources/Sources/**"],
         resources: ["Frameworks/PResources/Resources/**"],
         dependencies: [
-            .target(name: "PModels")
+            .target(name: "PModels"),
+            .external(name: "RiveRuntime")
         ]
     ))
     

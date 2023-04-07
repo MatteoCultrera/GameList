@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import RiveRuntime
+import PResources
 import SwiftUI
 
 struct InitialView: View {
@@ -20,22 +21,27 @@ struct InitialView: View {
 		}
 	}
 	
-	let animation = RiveViewModel(fileName: "zombie_character", stateMachineName: "State Machine 1")
+	let animation = PResourcesAnimations.zombie_character.withStateMachine(name: "State Machine 1")
 	
 	var body: some View {
 		WithViewStore(self.store, observe: ViewState.init) { viewStore in
 			VStack {
-				animation
-					.view()
+				
 				Spacer()
 				Button("Start") {
 					animation.triggerInput("Hit")
 //					viewStore.send(.startTapped)
 				}
 				.disabled(viewStore.isQueryPerforming)
+				Spacer()
 			}
 			.frame(maxWidth: .infinity)
-			.background(Color.red)
+			.background {
+				animation
+					.view()
+					.ignoresSafeArea()
+			}
+			.ignoresSafeArea()
 		}
 	}
 }

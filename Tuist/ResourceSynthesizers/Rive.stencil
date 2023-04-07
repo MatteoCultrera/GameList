@@ -1,0 +1,39 @@
+#if os(macOS)
+  import AppKit
+#elseif os(iOS)
+  {% if resourceCount.arresourcegroup > 0 %}
+  import ARKit
+  {% endif %}
+  import UIKit
+#elseif os(tvOS) || os(watchOS)
+  import UIKit
+#endif
+#if canImport(SwiftUI)
+  import SwiftUI
+#endif
+import RiveRuntime
+{% macro dirBlock directory %}
+{% for childDir in directory.directories %}
+{% call dirBlock childDir %}
+{% endfor %}
+{% for file in directory.files %}
+  public static let {{ file.name }} = RiveViewModel(fileName: "{{file.name}}")
+{% endfor %}
+{% endmacro %}
+
+// MARK: - Rive Animations
+
+public enum PResourcesAnimations { 
+{% for group in groups %}
+{% for directory in group.directories %}
+{% call dirBlock directory %}
+{% endfor %}
+{% endfor %}
+}
+
+public extension RiveViewModel {
+  func withStateMachine(name: String) -> RiveViewModel {
+    try? self.configureModel(stateMachineName: name)
+    return self
+  }
+}
