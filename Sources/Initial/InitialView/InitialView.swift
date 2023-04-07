@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import RiveRuntime
 import SwiftUI
 
 struct InitialView: View {
@@ -19,12 +20,17 @@ struct InitialView: View {
 		}
 	}
 	
+	let animation = RiveViewModel(fileName: "zombie_character", stateMachineName: "State Machine 1")
+	
 	var body: some View {
 		WithViewStore(self.store, observe: ViewState.init) { viewStore in
 			VStack {
+				animation
+					.view()
 				Spacer()
 				Button("Start") {
-					viewStore.send(.startTapped)
+					animation.triggerInput("Hit")
+//					viewStore.send(.startTapped)
 				}
 				.disabled(viewStore.isQueryPerforming)
 			}

@@ -102,7 +102,8 @@ private func makeTargets() -> [Target] {
             .target(name: "PNetwork"),
             .target(name: "PCache"),
             .target(name: "PResources"),
-            .external(name: "ComposableArchitecture")
+            .external(name: "ComposableArchitecture"),
+            .external(name: "RiveRuntime")
         ]
     ))
     
