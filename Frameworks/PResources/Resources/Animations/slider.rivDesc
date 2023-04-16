@@ -1,0 +1,13 @@
+{
+	"name": "SliderArrow",
+	"fileName": "slider",
+	"stateMachine": {
+		"name": "State Machine 1",
+		"triggers": {
+			"downloaded": "Downloaded",
+		},
+		"booleans": {
+			"download": "Download"
+		}
+	}
+}

@@ -8,44 +8,35 @@
 import ComposableArchitecture
 import RiveRuntime
 import PResources
+import PModels
 import SwiftUI
 
 struct InitialView: View {
 	let store: StoreOf<Initial>
 	
-	struct ViewState: Equatable {
-		var isQueryPerforming: Bool
-		
-		init(state: Initial.State) {
-			self.isQueryPerforming = state.isLoginRequestInFlight
-		}
-	}
-	
-	let animation = PResourcesAnimations.beachSwitch
-	@State var isSelected = false
-	
 	var body: some View {
-		WithViewStore(self.store, observe: ViewState.init) { viewStore in
+		WithViewStore(self.store, observe: { $0 }) { store in
 			VStack {
-				
 				Spacer()
-				Button("Start") {
-					isSelected.toggle()
-					animation.setBool(bool: .isSelected, value: isSelected)
-//					viewStore.send(.startTapped)
-				}
-				.disabled(viewStore.isQueryPerforming)
-				Spacer()
+				SliderView(
+					store: self.store.scope(
+						state: \.sliderState,
+						action: Initial.Action.sliderAction
+					)
+				)
+				.padding()
+				.padding(.bottom)
 			}
 			.frame(maxWidth: .infinity)
 			.background {
-				animation
-					.view
-					.ignoresSafeArea()
+				PResourcesAsset.testImage.swiftUIImage
+					.resizable()
+					.aspectRatio(contentMode: .fill)
 			}
 			.ignoresSafeArea()
 		}
 	}
+	
 }
 
 
