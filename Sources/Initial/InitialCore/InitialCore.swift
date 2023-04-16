@@ -6,13 +6,16 @@ import ComposableArchitecture
 public struct Initial: ReducerProtocol {
 	public struct State: Equatable {
 		public var isLoginRequestInFlight = false
+		public var response: Models.Response.List? = nil
+		public var sliderState: SliderCore.State = SliderCore.State()
 		
 		public init() {}
 	}
 	
 	public enum Action: Equatable {
-		case startTapped
-		case startRespond(TaskResult<Models.Response.List>)
+		case apiResponded(TaskResult<Models.Response.List>)
+		case sliderAction(SliderCore.Action)
+		case gameListReady(Models.Response.List)
 	}
 	
 	@Dependency(\.rawgClient) var rawgClient
@@ -22,10 +25,21 @@ public struct Initial: ReducerProtocol {
 	public var body: some ReducerProtocol<State, Action> {
 		Reduce { state, action in
 			switch action {
-			case .startTapped:
+			case let .apiResponded(.success(response)):
+				state.isLoginRequestInFlight = false
+				state.response = response
+				return .task {
+					.sliderAction(.updateStateMachine(newState: .loaded))
+				}
+			case .apiResponded(.failure(_)):
+				state.isLoginRequestInFlight = false
+				return .none
+			case .gameListReady(_):
+				return .none
+			case .sliderAction(.updateStateMachine(.loading)):
 				state.isLoginRequestInFlight = true
 				return .task {
-					.startRespond(
+					.apiResponded(
 						await TaskResult {
 							
 							let string = "01/02/2020"
@@ -46,12 +60,18 @@ public struct Initial: ReducerProtocol {
 						}
 					)
 				}
-			case let .startRespond(.success(response)):
-				return .none
-			case let .startRespond(.failure(error)):
-				state.isLoginRequestInFlight = false
+			case .sliderAction(.loadAnimationComplete):
+				guard let response = state.response else { return .none }
+				return .task {
+					return .gameListReady(response)
+				}
+			case .sliderAction(_):
 				return .none
 			}
+		}
+		
+		Scope(state: \.sliderState, action: /Action.sliderAction) {
+			SliderCore()
 		}
 	}
 	

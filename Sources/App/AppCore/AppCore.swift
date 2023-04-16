@@ -20,20 +20,18 @@ public struct GameApp: ReducerProtocol {
 	public var body: some ReducerProtocol<State, Action> {
 		Reduce { state, action in
 			switch action {
-			case let .initial(.startRespond(.success(response))):
+			case let .initial(.gameListReady(gameList)):
 				state = .list(
 					List.State(
-						games: IdentifiedArrayOf<GameItem.State>(
-							uniqueElements: response.results.map {
+						games: .init(
+							uniqueElements: gameList.results.map {
 								GameItem.State(id: $0.id, game: $0.normalize())
 							}
 						)
 					)
 				)
 				return .none
-			case .initial(.startTapped):
-				return .none
-			case .initial(.startRespond(.failure(_))):
+			case .initial(_):
 				return .none
 			case .list:
 				return .none
