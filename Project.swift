@@ -21,7 +21,7 @@ let project = Project(
     name: projectConfig.appName,
     organizationName: projectConfig.organizationName,
     options: .options(
-        textSettings: .textSettings(usesTabs: true, indentWidth: 2, tabWidth: 2, wrapsLines: true)
+        textSettings: .textSettings(usesTabs: false, indentWidth: 2, tabWidth: 2, wrapsLines: true)
     ),
     targets: makeTargets(),
     resourceSynthesizers: [
