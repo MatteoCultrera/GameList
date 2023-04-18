@@ -60,12 +60,18 @@ public protocol BaseRiveAnimation {
   var view: AnyView { get }
 }
 
-public class BaseRiveAnimationImpl: BaseRiveAnimation {
+public class BaseRiveAnimationImpl: BaseRiveAnimation, Equatable {
   public var riveViewModel: RiveViewModel
   public var view: AnyView
+  public let fileName: String
   init(fileName: String) {
     riveViewModel = RiveViewModel(fileName: fileName)
     self.view = riveViewModel.view()
+    self.fileName = fileName
+  }
+  
+  public static func == (lhs: BaseRiveAnimationImpl, rhs: BaseRiveAnimationImpl) -> Bool {
+    lhs.fileName == rhs.fileName
   }
 }
 

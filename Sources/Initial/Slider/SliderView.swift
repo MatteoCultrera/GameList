@@ -16,7 +16,7 @@ struct SliderView: View {
 				.frame(maxWidth: .infinity, alignment: .leading)
 				.background {
 					RoundedRectangle(cornerRadius: 200)
-						.fill(Color.red)
+						.fill(Material.ultraThin)
 						.frame(width: viewStore.state.sliderWidth)
 				}
 				.cornerRadius(SliderCore.Constants.sliderCornerRadius)
@@ -71,7 +71,11 @@ struct SliderView: View {
 		}
 		.background {
 			RoundedRectangle(cornerRadius: 2000)
-				.fill(LinearGradient(colors: [.blue, .red], startPoint: .bottomTrailing, endPoint: .topLeading))
+				.fill(LinearGradient(
+					colors: [PResourcesAsset.accentDark.swiftUIColor, PResourcesAsset.accentLight.swiftUIColor],
+					startPoint: .bottomTrailing,
+					endPoint: .topLeading
+				))
 				.frame(width: SliderCore.Constants.toggleMinWidth, height: SliderCore.Constants.toggleMinWidth)
 		}
 		.frame(width: SliderCore.Constants.toggleMinWidth, height: SliderCore.Constants.toggleMinWidth)

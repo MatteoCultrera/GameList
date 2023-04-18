@@ -104,7 +104,7 @@ private func makeTargets() -> [Target] {
         platform: .iOS,
         product: .app,
         bundleId: projectConfig.organizationName+".GameList",
-        infoPlist: .extendingDefault(with: launchScreenPlist),
+        infoPlist: .file(path: .relativeToRoot("InfoPlists/GameList-Info.plist")),
         sources: ["Sources/**"],
         resources: ["Resources/**", "Frameworks/PResources/Resources/Animations/**"],
         dependencies: [
