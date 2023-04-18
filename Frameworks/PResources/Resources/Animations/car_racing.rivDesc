@@ -1,0 +1,10 @@
+{
+	"name": "MuscleCar",
+	"fileName": "car_racing",
+	"stateMachine": {
+		"name": "State Machine 1",
+		"triggers": {
+			"drive": "Click"
+		}
+	}
+}

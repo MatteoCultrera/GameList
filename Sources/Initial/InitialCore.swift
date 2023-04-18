@@ -8,6 +8,7 @@ public struct Initial: ReducerProtocol {
 		public var isLoginRequestInFlight = false
 		public var response: Models.Response.List? = nil
 		public var sliderState: SliderCore.State = SliderCore.State()
+		public let animation = PResourcesAnimations.muscleCar
 		
 		public init() {}
 	}
@@ -38,6 +39,7 @@ public struct Initial: ReducerProtocol {
 				return .none
 			case .sliderAction(.updateStateMachine(.loading)):
 				state.isLoginRequestInFlight = true
+				state.animation.trigger(trigger: .drive)
 				return .task {
 					.apiResponded(
 						await TaskResult {

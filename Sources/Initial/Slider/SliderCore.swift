@@ -88,7 +88,7 @@ public struct SliderCore: ReducerProtocol {
 			case .updateAnimationComplete:
 				state.animation.trigger(trigger: .downloaded)
 				return .task {
-					try await Task.sleep(until: .now + .seconds(2), clock: .continuous)
+					try await Task.sleep(until: .now + .seconds(1.2), clock: .continuous)
 					 return .updateSliderYOffset
 				 }
 			case .updateSliderYOffset:
