@@ -2,8 +2,6 @@ import ComposableArchitecture
 import SwiftUI
 
 public struct SliderCore: ReducerProtocol {
-	@Dependency(\.uuid) var uuid
-	
 	public enum Constants {
 		static var sliderHeight: CGFloat = 80
 		static var borderSize: CGFloat = 1
