@@ -28,7 +28,7 @@ struct GameItemView: View {
 			}
 			.padding()
 			.background {
-				gameImage(image: viewStore.gameImage)
+				gameImage(image: viewStore.gameImage, isBackground: true)
 					.overlay(.thinMaterial)
 			}
 			.clipped()
@@ -77,17 +77,33 @@ struct GameItemView: View {
 	}
 	
 	@ViewBuilder
-	private func gameImage(image: Image?) -> some View {
+  private func gameImage(image: Image?, isBackground: Bool = false) -> some View {
 		if let image {
 			image
 				.resizable()
 				.scaledToFill()
 		} else {
-			VStack{
-				
-			}
-			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.background(Color.red)
+      if isBackground {
+        VStack{ }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+          LinearGradient(
+            colors: [PResourcesAsset.backgroundDark.swiftUIColor, PResourcesAsset.backgroundLight.swiftUIColor],
+            startPoint: .bottom,
+            endPoint: .top
+          )
+        }
+      } else {
+        VStack{
+          PResourcesAsset.controller.swiftUIImage
+            .resizable()
+            .scaledToFit()
+            .padding(50)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background (.black)
+      }
+			
 		}
 	}
 	
