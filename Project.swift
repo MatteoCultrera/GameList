@@ -26,6 +26,7 @@ let project = Project(
     targets: makeTargets(),
     resourceSynthesizers: [
         .assets(),
+        .fonts(),
         .custom(
             name: "Rive",
             parser: .json,

@@ -11,8 +11,6 @@ struct InitialView: View {
     WithViewStore(self.store, observe: { $0 }) { store in
       VStack {
         Spacer()
-        store.state.animation.view
-          .frame(height: 400)
         SliderView(
           store: self.store.scope(
             state: \.sliderState,
@@ -24,16 +22,8 @@ struct InitialView: View {
       }
       .frame(maxWidth: .infinity)
       .background {
-        LinearGradient(
-          colors: [
-            PResourcesAsset.backgroundDark.swiftUIColor,
-            PResourcesAsset.backgroundLight.swiftUIColor
-          ],
-          startPoint: .bottom,
-          endPoint: .top
-        )
+        LoginBackgroundView()
       }
-      .ignoresSafeArea()
     }
   }
   
