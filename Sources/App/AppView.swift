@@ -10,6 +10,10 @@ public struct AppView: View {
 	
 	public var body: some View {
 		SwitchStore(self.store) {
+      CaseLet(state: /GameApp.State.login, action: GameApp.Action.login) { store in
+        LoginView(store: store)
+          .transition(.opacity.combined(with: .offset(x:0 , y: 20)))
+      }
 			CaseLet(state: /GameApp.State.initial, action: GameApp.Action.initial) { store in
 				InitialView(store: store)
 					.transition(.opacity.combined(with: .offset(x: 0, y: 20)))

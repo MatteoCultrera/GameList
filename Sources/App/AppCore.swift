@@ -4,13 +4,17 @@ import ComposableArchitecture
 
 public struct GameApp: ReducerProtocol {
   public enum State: Equatable {
+    case login(Login.State)
     case initial(Initial.State)
     case list(List.State)
     
-    public init() { self = .initial(Initial.State()) }
+    public init() {
+      self = .login(Login.State())
+    }
   }
   
   public enum Action: Equatable {
+    case login(Login.Action)
     case initial(Initial.Action)
     case list(List.Action)
   }
@@ -36,7 +40,12 @@ public struct GameApp: ReducerProtocol {
         return .none
       case .list:
         return .none
+      case .login:
+        return .none
       }
+    }
+    .ifCaseLet(/State.login, action: /Action.login) {
+      Login()
     }
     .ifCaseLet(/State.initial, action: /Action.initial) {
       Initial()
